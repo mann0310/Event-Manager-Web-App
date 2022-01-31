@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Dashboard</title>
+     <script src="https://kit.fontawesome.com/3ddc804655.js" crossorigin="anonymous"></script>
+
+     <style>
+          section {
+               height: 100vh;
+
+               position: relative;
+          }
+
+          .primary {
+               background-color: whitesmoke;
+               border: 3px solid grey;
+               max-width: 1100px;
+               width: 100%;
+
+               height: 70vh;
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+               justify-content: center;
+               position: absolute;
+               right: 0;
+               left: 0;
+               top: 0;
+               bottom: 0;
+               margin: auto;
+               text-align: center;
+          }
+
+          label{
+               font-weight: bold;
+               color: rgb(123, 120, 114);
+               font-size: 1.2em;
+          }
+          input{
+               margin: 4px;
+               margin-top: 5px;
+               margin-bottom: 5px;
+          }
+          table, th{
+               border: 2px solid black;
+               margin: 8px;
+          }
+          th{
+               height: 8px;
+          }
+          td{
+               padding: 4px;
+               border: 2px solid rgb(98, 89, 89);
+          }
+          a{
+               font-size: 1.1em;
+               text-decoration: none;
+               color: navy;
+               display: block;
+               margin: 8px;
+          }
+          a:hover{              
+                color: rgb(123, 120, 114);
+          }
+          .alert-success{
+               background-color: rgb(231, 228, 132);
+               margin: 8px;
+               padding: 15px;
+               font-size: 1.3em;
+          }
+          .alert-error{
+               background-color: rgb(243, 149, 149);
+               margin: 8px;
+               padding: 15px;
+               font-size: 1.3em;
+               color: rgb(152, 26, 26);
+          }
+          footer{
+               text-align: center;
+               margin-top: -60px;
+               font-size: 8px;
+               
+          }
+          i{
+               padding: 10px;
+          }
+          h2{
+               display: inline-block;
+               font-size: 1.7em;
+          }
+     </style>
+</head>
+
+<body>
+     <section>
+          {% for msg in messages %}
+               {% if "no" in msg.tags %}
+                    <div class="alert-success" role="alert">
+                         <strong>{{msg}}</strong>
+                    </div>
+               {% else %}
+                    <div class="alert-error" role="alert">
+                         <strong>Error! </strong>{{msg}}
+                    </div>
+               {% endif %}
+          {% endfor %}
+          <div class="primary">
+               <form action="/event_dashboard/" method="post" function="">
+                    {% csrf_token %}
+                    <label for="event_id">Event ID: </label><input type="number" name="event_id" id="event_id"><br>
+                    <label for="host_password">Password: </label><input type="password" name="host_password" id="host_password"><br>
+                    <input type="submit" value="Submit"><br>
+               </form>
+               {% if participants %}
+               <table class="secondary" id="table">
+                    <tr>
+                         <th>Participant ID</th>
+                         <th>Name</th>
+                         <th>Contact No.</th>
+                         <th>Email-ID</th>
+                         <th>Participation Type</th>
+                         <th>No. of People</th>
+                    </tr>
+                    {% for participant in participants %}
+                    <tr>
+                         <td>{{participant.id}}</td>
+                         <td>{{participant.name}}</td>
+                         <td>{{participant.tel}}</td>
+                         <td>{{participant.email}}</td>
+                         <td>{{participant.type}}</td>
+                         <td>{{participant.num}}</td>
+                    </tr>
+                    {% endfor %}
+               </table>
+               <a href="http://127.0.0.1:8000/">Back to HomePage</a>
+               {% else %}
+               <!-- <h2 id="change">No participant is registered for this event</h2> -->
+               <a href="http://127.0.0.1:8000/">Back to HomePage</a>
+               {% endif %}
+          </div>
+     </section>
+     <footer><i class="fas fa-envelope fa-3x"> : -------@example.com</i>    <i class="fas fa-phone-alt fa-3x"> : +(---)--------</i></footer>
+
+</body>
+
+</html>

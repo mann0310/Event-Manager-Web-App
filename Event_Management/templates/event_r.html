@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Event Registeration</title>
+     <script src="https://kit.fontawesome.com/3ddc804655.js" crossorigin="anonymous"></script>
+
+     <style>
+          section {
+               height: 100vh;
+
+               position: relative;
+          }
+
+          .primary {
+               background-color: whitesmoke;
+               border: 3px solid grey;
+               max-width: 1100px;
+               width: 100%;
+
+               height: 70vh;
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+               justify-content: center;
+               position: absolute;
+               right: 0;
+               left: 0;
+               top: 0;
+               bottom: 0;
+               margin: auto;
+               text-align: center;
+          }
+          h1{
+               font-size: 2em;
+          }
+          label{
+               font-weight: bold;
+               color: rgb(123, 120, 114);
+               font-size: 1.2em;
+          }
+          input{
+               margin: 4px;
+               margin-top: 5px;
+               margin-bottom: 5px;
+          }
+          a{
+               font-size: 1.1em;
+               text-decoration: none;
+               color: navy;
+               display: block;
+               margin: 8px;
+          }
+          a:hover{              
+                color: rgb(123, 120, 114);
+          }
+          .alert-success{
+               background-color: rgb(183, 253, 183);
+               margin: 8px;
+               padding: 15px;
+               font-size: 1.3em;
+               color: green;
+          }
+          .alert-error{
+               background-color: rgb(243, 149, 149);
+               margin: 8px;
+               padding: 15px;
+               font-size: 1.3em;
+               color: rgb(152, 26, 26);
+          }
+          footer{
+               text-align: center;
+               margin-top: -60px;
+               font-size: 8px;
+               
+          }
+          i{
+               padding: 10px;
+          }
+          h2{
+               display: inline-block;
+               font-size: 1.7em;
+          }
+     </style>
+     {% load static %}  
+     <script src="{% static '/time12to24.js' %}"></script>
+</head>
+
+<body>
+     <section>
+          {% for msg in messages %}
+               {% if "event" in msg.tags %}
+                    <div class="alert-success" role="alert">
+                         <strong>Success! </strong>{{msg}}
+                    </div>
+               {% else %}
+                    <div class="alert-error" role="alert">
+                         <strong>Error! </strong>{{msg}}
+                    </div>
+               {% endif %}
+          {% endfor %}
+          <div class="primary">
+               <h1>Event Registration</h1>
+               <form action="/event_r/" method="post">
+                    {% csrf_token %}
+                    <label for="name">Event Name : </label>
+                    <input type="text" id="name" name="event_name" placeholder="Event Name" required><br>
+
+                    <label for="desc">Description : </label>
+                    <input type="text" id="desc" name="desc" placeholder="Desciption about the event" required><br>
+                    <label for="location">Location : </label>
+                    <input type="text" name="location" id="location" placeholder="Location" required><br>
+                    <label for="from_date">From&nbsp;&nbsp; </label><input type="date" name="from_date" placeholder="yyyy-mm-dd" id="from_date" required>
+                    <input type="time" name="from_time" id="from_time" function="convertTime12to24(value)" required><label
+                         for="to_date">&nbsp;&nbsp;&nbsp; To
+                         &nbsp;&nbsp;&nbsp;</label> <input type="date" name="to_date" placeholder="yyyy-mm-dd" id="to_date" required>
+                    <input type="time" name="to_time" id="to_time" function="convertTime12to24(value)" required><br>
+                    <label for="last_date">Registration Deadline&nbsp;&nbsp; </label><input type="date" name="last_date"
+                         placeholder="yyyy-mm-dd" required> <input type="time" name="last_time" id="last_time"
+                         function="convertTime12to24(value) "required><br>
+
+                    
+                    <label for="email">Host-Email : </label>
+                    <input type="text" name="email" id="email" placeholder="Email" required><br>
+                    <label for="password">Host-Password : </label>
+                    <input type="password" name="password" id="password" placeholder="Password"><br>
+                    <input type="submit" value="Submit" class="secondary"><br>
+                    <a href="http://127.0.0.1:8000/">Back to HomePage</a>
+               </form>
+          </div>
+     </section>
+<footer><i class="fas fa-envelope fa-3x"> : -------@example.com</i>    <i class="fas fa-phone-alt fa-3x"> : +(---)--------</i></footer>
+     
+</body>
+
+</html>

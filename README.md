@@ -1,1 +1,2 @@
-# woc4.0-eventmanager-Mann
+# Event Manager Web App
+# Python + Django 
